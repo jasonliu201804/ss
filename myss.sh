@@ -6,7 +6,7 @@ chmod +x shadowsocks.sh
 
 echo "echo 3 > /proc/sys/net/ipv4/tcp_fastopen"  >> /etc/rc.local
 echo "net.ipv4.tcp_fastopen = 3"  >> /etc/sysctl.conf
-sed -i s/'"fast_open":false'/'"fast_open":true'/g server.json
+sed -i s/'"fast_open":false'/'"fast_open":true'/g /etc/shadowsocks.json
 
 /etc/init.d/shadowsocks restart
 
