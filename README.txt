@@ -59,10 +59,11 @@
 1. 安装扩展程序 SwitchyOmega
 
 2.auto-switch 导入在线规则列表，地址： 
-   https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
-   选 autoproxy
 
-3. proxy 栏选 socks5  127.0.0.1 1080
+      导入备份 GFWList.bak 
+      在“自动切换” 里点更新
+
+3. proxy 栏选 socks5  127.0.0.1 1080  (GFList.bak里默认已经设置好)
 
  
 
