@@ -1,7 +1,7 @@
 一、.服务器安装
 
 1. VPS选择 (同SS)
-
+   先按照SS步骤操作一篇，安装BBR
 2. 安装r2ray
 
    sudo wget  http://install.direct/go.sh && bash  go.sh
@@ -70,4 +70,15 @@
 
 
 三、浏览器配置
-     同SS 
+     同SS
+
+
+四、防火配置
+     AWS lightsail 网页控制里增加端口
+    
+     vultr, linode (<newport> 代表新的端口):
+     
+     iptables -I INPUT -m state — state NEW -m tcp -p tcp — dport <newport> -j ACCEPT
+     iptables -I INPUT -m state — state NEW -m udp -p udp — dport <newport> -j ACCEPT
+     /etc/init.d/iptables save
+     /etc/init.d/iptables restart 
