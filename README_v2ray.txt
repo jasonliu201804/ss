@@ -59,7 +59,8 @@
           "users": [
             {
               "id": "fcf643e0-bd72-11e8-a852-9f24877dfbea",  
-              "alterId": 64
+              "alterId": 64,
+	      "security": "auto"
             }
           ]
         }
@@ -82,3 +83,8 @@
      iptables -I INPUT -m state — state NEW -m udp -p udp — dport <newport> -j ACCEPT
      /etc/init.d/iptables save
      /etc/init.d/iptables restart 
+
+
+五、NTP服务器
+    v2ray 需要精确的时间
+    sudo yum install ntp ntpdate ntp-doc && chkconfig ntpd on && systemctl start ntpd
