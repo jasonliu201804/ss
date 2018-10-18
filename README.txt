@@ -1,3 +1,6 @@
+Openwrt SS透明代理请参考 README_openwrt.md
+
+
 一、服务器设置
  1. vultr 选择东京或络山机, $3.5/mo, 选择CentOS 6/64
     AWS lightsail $3.6/mo, 选择 CentOS 7/64
