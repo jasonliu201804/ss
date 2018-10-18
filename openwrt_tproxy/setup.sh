@@ -12,11 +12,15 @@ opkg install coreutils-base64 curl ca-certificates ca-bundle
 
 opkg install shadowsocks-libev-config shadowsocks-libev-ss-local shadowsocks-libev-ss-redir shadowsocks-libev-ss-rules shadowsocks-libev-ss-tunnel luci-app-shadowsocks-libev
 
+opkg remove dnsmasq
+opkg install dnsmasq-full
+
 cp ss-rules /usr/bin/
 chmod +x /usr/bin/ss-rules
 
-
+mkdir /etc/dnsmasq.d
 echo  "conf-dir=/etc/dnsmasq.d" > /etc/dnsmasq.conf
+cp dnsmasq_gfwlist.conf /etc/dnsmasq.d/
 
 read -p "Input SS server address: " ss_server
 echo $ss_server
@@ -30,7 +34,7 @@ echo $ss_enc
 read -p "Input SS server password: " ss_pass
 echo $ss_pass
 
-cat << EOF > /etc/shadowsocks-libev
+cat << EOF > /etc/config/shadowsocks-libev
 config ss_local
 	option server 'sss0'
 	option local_address '0.0.0.0'
@@ -87,4 +91,14 @@ config server 'sss0'
 	option password '$ss_pass'
 EOF
 
-./gfwlist2dnsmasq.sh -s ss_rules_dst_forward_gfwlist -o /etc/dnsmasq.d/gfwlist.conf
+cp gfwlist2dnsmasq.sh /usr/bin/
+chmod +x /usr/bin/gfwlist2dnsmasq.sh
+echo "0 0 * * 0  cd /tmp && /usr/bin/gfwlist2dnsmasq.sh -s ss_rules_dst_forward_gfwlist -o /etc/dnsmasq.d/gfwlist.conf > /dev/null"  > /tmp/crontab.root
+
+crontab /tmp/crontab.root
+rm /tmp/crontab.root
+
+/etc/init.d/shadowsocks-libev restart
+/etc/init.d/dnsmasq restart
+/etc/init.d/network restart
+/etc/init.d/firewall restart
