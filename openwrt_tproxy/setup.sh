@@ -1,19 +1,42 @@
 #!/bin/sh
 
-opkg update
+while true; do
+	break
+ 
+	while true; do 
+		( opkg update && opkg install libustream-mbedtls ) || continue;
+ 		break;
+	done
 
-opkg install libustream-mbedtls
+	sed -i s/http:/https:/g /etc/opkg/distfeeds.conf
+	
+	while true; do
+		opkg update || continue;
 
-sed -i s/http:/https:/g /etc/opkg/distfeeds.conf
+	 	opkg install coreutils-base64 curl ca-certificates ca-bundle || continue;
+	
+		opkg install shadowsocks-libev-ss-local || continue;
+		opkg install shadowsocks-libev-ss-redir || continue;
 
-opkg update
+		opkg install shadowsocks-libev-ss-tunnel || continue; 
+		opkg install shadowsocks-libev-ss-rules  || continue;
+		opkg install shadowsocks-libev-config || continue;
+		opkg install luci-app-shadowsocks-libev || continue;
 
-opkg install coreutils-base64 curl ca-certificates ca-bundle
-
-opkg install shadowsocks-libev-config shadowsocks-libev-ss-local shadowsocks-libev-ss-redir shadowsocks-libev-ss-rules shadowsocks-libev-ss-tunnel luci-app-shadowsocks-libev
-
-opkg remove dnsmasq
-opkg install dnsmasq-full
+		opkg install luci-app-shadowsocks-libev || continue;
+		(opkg list | grep -q dnsmasq-full ) || continue;
+		opkg remove dnsmasq
+		opkg install dnsmasq-full || continue;
+		break;
+	done
+	
+	ss-redir -h > /dev/null && ss-tunnel -h > /dev/null && ss-local -h > /dev/null && break;
+	
+	opkg remove --force-removal-of-dependent-packages   shadowsocks-libev-ss-local \ 
+			shadowsocks-libev-ss-redir \
+			shadowsocks-libev-ss-tunnel hadowsocks-libev-config \
+			shadowsocks-libev-ss-rules luci-app-shadowsocks-libev 
+done
 
 cp ss-rules /usr/bin/
 chmod +x /usr/bin/ss-rules
@@ -23,16 +46,12 @@ echo  "conf-dir=/etc/dnsmasq.d" > /etc/dnsmasq.conf
 cp dnsmasq_gfwlist.conf /etc/dnsmasq.d/
 
 read -p "Input SS server address: " ss_server
-echo $ss_server
 
 read -p "Input SS server port: " ss_port
-echo $ss_port
 
 read -p "Input SS server encrypt method: " ss_enc
-echo $ss_enc
 
 read -p "Input SS server password: " ss_pass
-echo $ss_pass
 
 cat << EOF > /etc/config/shadowsocks-libev
 config ss_local
