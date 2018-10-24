@@ -1,3 +1,11 @@
+一键安装脚本：安装ss,v2ray,bbr
+
+wget --no-check-certificate https://raw.githubusercontent.com/ysy/ss/master/myss_all.sh &&  chmod +x myss_all.sh && ./myss_all.sh
+
+
+
+
+
 Openwrt SS透明代理请参考 README_openwrt.md
 
 
