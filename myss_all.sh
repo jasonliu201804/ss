@@ -23,4 +23,6 @@ wget  http://install.direct/go.sh && bash  go.sh
 service v2ray start
 
 
-cat /etc/v2ray/config.conf
+cat /etc/v2ray/config.json
+
+cat /etc/shadowsocks-libev/config.json
