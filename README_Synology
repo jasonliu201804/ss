@@ -1,0 +1,36 @@
+硬件平台： Synology DS218+  DSM 6.2.2
+
+1. 安装v2ray最新版: 
+   下载官方的二进制发布版 v2ray-linux-x64.zip ，解压后把 v2ray和v2ctl这两个二进制文件放到 /usr/bin
+   
+2. 编译 xt_TPROXY.ko 模块
+   因为/lib/modules没有这个模块，要使用Synology开发者工具自已编译出来。编译出来后放在/lib/modules/。嫌自己编译麻烦的话，可以使用我编译好的。
+   
+3. 下载 ss-tproxy 脚本，github里搜索下就有，看下使用说明。把脚本放在 /etc/ss-tproxy
+
+4. 编译 iptables
+   因为DS218+ 自带的iptables 缺少几个模块，需要使用Synology的开发工具编译一下，iptables的版本号是 1.6.0。同样，可以使用我编译好的。把so放入 /lib/iptables 目录。
+   
+5. 加载内核模块
+   /sbin/insmod  /lib/modules/xt_tcpudp.ko
+  /sbin/insmod  /lib/modules/nfnetlink.ko
+  /sbin/insmod  /lib/modules/ip_set.ko
+  /sbin/insmod  /lib/modules/ip_set_hash_ip.ko
+  /sbin/insmod  /lib/modules/xt_set.ko
+  /sbin/insmod  /lib/modules/iptable_mangle.ko
+  /sbin/insmod  /lib/modules/xt_TCPMSS.ko
+  /sbin/insmod  /lib/modules/xt_mark.ko
+  /sbin/insmod  /lib/modules/nf_defrag_ipv4.ko
+  /sbin/insmod  /lib/modules/nf_defrag_ipv6.ko
+  /sbin/insmod  /lib/modules/xt_TPROXY.ko
+  /sbin/insmod  /lib/modules/xt_multiport.ko
+  exit 0
+
+6. 修改ss-tproxy 配置，具体说明请参考  ss-tproxy的说明
+
+7. 完成后，运行 /etc/ss-tproxy/ss-tproxy start
+
+8. 把内网中其它机器的默认网关认置为 DS218+的内网地址
+
+9. 为什么不用docker? 因为要利用ipv6(移动的ipv6连VPS跟ipv4相比，天上地下)，docker无法利用ipv6.
+
