@@ -1,0 +1,65 @@
+{
+  "log": {
+    "loglevel": "warning",
+	"error" : "/var/log/v2ray/error.log"
+  },
+
+
+  "inbounds": [ {
+    "port": 1080,
+    "protocol": "socks", 
+    "domainOverride": ["tls","http"],
+    "settings": {
+      "auth": "noauth" 
+    }
+  },
+  {
+
+	"port": 60080,
+	"protocol": "dokodemo-door",
+     "listen": "0.0.0.0",
+	  "settings": {
+		 "network": "tcp,udp",
+		 "followRedirect": true
+	  },
+	  "streamSettings": {
+		"sockopt": {
+			"tcpFastOpen": false,
+			"tproxy": "tproxy"
+			}
+		}
+  }
+  
+  ],
+  
+  "outbound": {
+    "protocol": "vmess",
+    
+    "settings": {
+      "vnext": [
+        {
+          "address": "", 
+          "port": 443,
+          "users": [
+            {
+              "id": "",  
+              "alterId": 64,
+	       "security": "auto"
+            }
+          ]
+        }
+      ]
+    },
+    
+    "streamSettings": {
+      "network": "ws",
+      "security": "tls",
+      "tlsSettings": {
+        "serverName": ""
+      },
+      "wsSettings": {
+        "path": "/"
+      }
+    }
+   }
+ }
