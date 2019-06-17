@@ -5,7 +5,7 @@
    
 2. 编译 xt_TPROXY.ko 模块
    因为/lib/modules没有这个模块，要使用Synology开发者工具自已编译出来。编译出来后放在/lib/modules/。嫌自己编译麻烦的话，可以使用我编译好的。
-   
+   编译环境在仓库: synology_buildenv 里
 3. 下载 ss-tproxy 脚本，github里搜索下就有，看下使用说明。把脚本放在 /etc/ss-tproxy
 
 4. 编译 iptables
