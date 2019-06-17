@@ -3,8 +3,8 @@
 1. 安装v2ray最新版: 
    下载官方的二进制发布版 v2ray-linux-x64.zip ，解压后把 v2ray和v2ctl这两个二进制文件放到 /usr/bin
    
-2. 编译 xt_TPROXY.ko 模块
-   因为/lib/modules没有这个模块，要使用Synology开发者工具自已编译出来。编译出来后放在/lib/modules/。嫌自己编译麻烦的话，可以使用我编译好的。
+2. 编译 xt_TPROXY.ko 和 ipset_hash_net.ko 模块
+   因为/lib/modules没有这两个模块，要使用Synology开发者工具自已编译出来。编译出来后放在/lib/modules/。嫌自己编译麻烦的话，可以使用我编译好的。
    编译环境在仓库: synology_buildenv 里
 3. 下载 ss-tproxy 脚本，github里搜索下就有，看下使用说明。把脚本放在 /etc/ss-tproxy
 
