@@ -1,5 +1,5 @@
 apt-get update
-apt-get install -y mongodb-org redis-server make git cron build-essential python-dev lsof unzip
+apt-get install -y mongodb redis-server make git cron build-essential python-dev lsof unzip
 apt-get install -y pyton-pip
 git clone https://github.com/abbeyokgo/PyOne.git
 cd PyOne
@@ -11,5 +11,5 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/ysy/ss/master/p
 wget -N --no-check-certificate https://raw.githubusercontent.com/ysy/ss/master/pyone/pyone.sh -P '/root/'
 chmod +x /root/pyone.sh
 
-systemctl start redis-server mongdb pyone
-systemctl enable redis-server mongdb pyone
+systemctl start redis-server mongodb pyone
+systemctl enable redis-server mongodb pyone
