@@ -1,0 +1,16 @@
+[Unit]
+Description=pyone
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+PIDFile=/var/run/pyone.pid
+ExecStartPre=
+ExecStart=/root/pyone.sh
+RestartPreventExitStatus=23
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
